@@ -17,9 +17,12 @@ from starlette.requests import Request
 from app.face_registry import FaceRegistry
 from app.models import (
     ApiMessage,
+    BrowserDetectRequest,
+    BrowserDetectResponse,
     BrowserRecognitionRequest,
     BrowserRecognitionResponse,
     FaceDetectionResult,
+    FaceMatchResult,
     ReferenceInfo,
 )
 
@@ -128,6 +131,63 @@ async def browser_recognition(payload: BrowserRecognitionRequest) -> BrowserReco
         )
 
     return BrowserRecognitionResponse(detections=detections)
+
+
+@app.post("/api/browser-detect", response_model=BrowserDetectResponse)
+async def browser_detect(payload: BrowserDetectRequest) -> BrowserDetectResponse:
+    """Nhận diện từ face crops được detect ở browser; ví dụ: POST /api/browser-detect."""
+
+    if len(payload.face_crops) != len(payload.face_locations):
+        raise HTTPException(
+            status_code=400,
+            detail="Number of face_crops and face_locations must match",
+        )
+
+    references = face_registry.get_faces(payload.reference_ids)
+    known_encodings: list[np.ndarray] = [face.encoding for face in references]
+    known_labels: list[str] = [face.label for face in references]
+
+    matches: list[FaceMatchResult] = []
+
+    for crop_base64, location in zip(payload.face_crops, payload.face_locations):
+        try:
+            crop_rgb: np.ndarray = _decode_browser_image(crop_base64)
+        except ValueError:
+            continue
+
+        # Extract face encoding từ crop
+        face_locations_in_crop: list[tuple[int, int, int, int]] = face_recognition.face_locations(crop_rgb, model="hog")
+        if not face_locations_in_crop:
+            continue
+
+        face_encodings: list[np.ndarray] = face_recognition.face_encodings(crop_rgb, face_locations_in_crop)
+        if not face_encodings:
+            continue
+
+        unknown_encoding: np.ndarray = face_encodings[0]
+        identity: str = "Unknown"
+        distance: float = 1.0
+        is_match: bool = False
+
+        if known_encodings:
+            distances: np.ndarray = face_recognition.face_distance(known_encodings, unknown_encoding)
+            best_index: int = int(np.argmin(distances))
+            distance = float(distances[best_index])
+
+            if distance <= 0.48:
+                identity = known_labels[best_index]
+                is_match = True
+
+        matches.append(
+            FaceMatchResult(
+                identity=identity,
+                distance=distance,
+                is_match=is_match,
+                location=location,
+            )
+        )
+
+    return BrowserDetectResponse(matches=matches)
 
 
 def _decode_browser_image(image_base64: str) -> np.ndarray:

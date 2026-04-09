@@ -40,3 +40,35 @@ class BrowserRecognitionResponse(BaseModel):
     """Kết quả nhận diện cho một frame webcam browser; ví dụ: BrowserRecognitionResponse(detections=[])."""
 
     detections: list[FaceDetectionResult]
+
+
+class BrowserFaceLocation(BaseModel):
+    """Vị trí khuôn mặt trong frame; ví dụ: BrowserFaceLocation(top=10, right=20, bottom=30, left=5)."""
+
+    top: int
+    right: int
+    bottom: int
+    left: int
+
+
+class BrowserDetectRequest(BaseModel):
+    """Payload gửi face crops để nhận diện; ví dụ: BrowserDetectRequest(face_crops=['data:image/jpeg;base64,...])."""
+
+    face_crops: list[str] = Field(..., min_items=1, description="Danh sách ảnh crops dạng base64")
+    face_locations: list[BrowserFaceLocation] = Field(..., description="Vị trí các khuôn mặt tương ứng")
+    reference_ids: list[str] = Field(default_factory=list, description="Danh sách ID khuôn mặt cần đối chiếu")
+
+
+class FaceMatchResult(BaseModel):
+    """Kết quả matching một khuôn mặt; ví dụ: FaceMatchResult(identity='Alex', distance=0.35, is_match=True)."""
+
+    identity: str
+    distance: float
+    is_match: bool
+    location: BrowserFaceLocation
+
+
+class BrowserDetectResponse(BaseModel):
+    """Kết quả nhận diện từ browser detect; ví dụ: BrowserDetectResponse(matches=[])."""
+
+    matches: list[FaceMatchResult]

@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/static/styles.css" />
+  <!-- Face detection library for browser-side face detection -->
+  <script async src="https://cdn.jsdelivr.net/npm/@vladmandic/face-api/dist/face-api.js"></script>
 </head>
 <body>
   <main class="page">
@@ -36,16 +38,23 @@
 
       <article class="panel panel-live">
         <h2>Live Browser Webcam</h2>
-        <p class="panel-note">Frames stay in your browser stream loop and are sent for matching in near real time.</p>
+        <p class="panel-note">Real-time face detection with local browser processing. Sends detected faces to server for matching on demand.</p>
+        
         <div class="browser-controls">
           <button id="browser-start-btn" type="button">Start Webcam</button>
           <button id="browser-stop-btn" type="button" class="danger-btn">Stop Webcam</button>
+          <button id="browser-send-btn" type="button" class="secondary-btn" disabled>Send Detected Faces</button>
         </div>
         <div class="browser-stage">
           <video id="browser-video" autoplay playsinline muted></video>
           <canvas id="browser-overlay"></canvas>
         </div>
         <p id="browser-status" class="stream-stats">Status: idle</p>
+      </article>
+
+      <article class="panel panel-results">
+        <h2>Detection & Match History</h2>
+        <div id="results-list" class="results-list"></div>
       </article>
     </section>
 
@@ -61,6 +70,22 @@
           <p class="reference-id"></p>
         </div>
         <button type="button" class="reference-delete danger-btn">Remove</button>
+      </article>
+    </template>
+
+    <template id="result-item-template">
+      <article class="result-item">
+        <div class="result-header">
+          <h4 class="result-name"></h4>
+          <p class="result-timestamp"></p>
+        </div>
+        <div class="result-body">
+          <img class="result-crop" alt="Detected face" />
+          <div class="result-details">
+            <p><strong>Identity:</strong> <span class="result-identity"></span></p>
+            <p><strong>Confidence:</strong> <span class="result-confidence"></span></p>
+          </div>
+        </div>
       </article>
     </template>
   </main>
