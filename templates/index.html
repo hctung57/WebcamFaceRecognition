@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Face Match Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <h1>Face Match Studio</h1>
+      <p>Upload reference faces, then run live matching from the user's own webcam directly in the browser.</p>
+    </section>
+
+    <section class="workspace-grid">
+      <article class="panel panel-upload">
+        <h2>Reference Gallery</h2>
+        <p class="panel-note">Upload clear, front-facing photos. One face per image works best.</p>
+        <form id="reference-form" class="form-grid">
+          <label>
+            Display Name
+            <input id="reference-label" type="text" name="label" placeholder="e.g. Alex Johnson" />
+          </label>
+          <label>
+            Face Image
+            <input id="reference-image" type="file" name="image" accept="image/png,image/jpeg" required />
+          </label>
+          <button type="submit">Upload Reference</button>
+        </form>
+        <div id="reference-list" class="reference-grid"></div>
+      </article>
+
+      <article class="panel panel-live">
+        <h2>Live Browser Webcam</h2>
+        <p class="panel-note">Frames stay in your browser stream loop and are sent for matching in near real time.</p>
+        <div class="browser-controls">
+          <button id="browser-start-btn" type="button">Start Webcam</button>
+          <button id="browser-stop-btn" type="button" class="danger-btn">Stop Webcam</button>
+        </div>
+        <div class="browser-stage">
+          <video id="browser-video" autoplay playsinline muted></video>
+          <canvas id="browser-overlay"></canvas>
+        </div>
+        <p id="browser-status" class="stream-stats">Status: idle</p>
+      </article>
+    </section>
+
+    <template id="reference-card-template">
+      <article class="reference-card">
+        <label class="select-wrap">
+          <input type="checkbox" class="reference-select" />
+          <span>Select</span>
+        </label>
+        <img class="reference-photo" alt="Reference face" loading="lazy" />
+        <div class="reference-meta">
+          <h3 class="reference-name"></h3>
+          <p class="reference-id"></p>
+        </div>
+        <button type="button" class="reference-delete danger-btn">Remove</button>
+      </article>
+    </template>
+  </main>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

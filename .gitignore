@@ -1,0 +1,38 @@
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.dylib
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tooling caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Editors and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# Runtime logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment and secrets
+.env
+.env.*
+
+
+# Local data outputs (keep folder structure via .gitkeep)
+data/references/*
+!data/references/.gitkeep

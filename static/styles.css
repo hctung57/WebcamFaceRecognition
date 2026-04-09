@@ -1,0 +1,274 @@
+:root {
+  --bg: #f2ede2;
+  --paper: #fffdf8;
+  --ink: #16263a;
+  --accent: #b5422f;
+  --accent-dark: #863123;
+  --line: #dbcdb8;
+  --ok: #226c36;
+  --muted: #5c6778;
+  --shadow: 0 10px 28px rgba(22, 38, 58, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Barlow", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 90% 5%, #f7c58f 0, #f2ede2 36%),
+    radial-gradient(circle at 8% 80%, #d3e0be 0, #f2ede2 44%);
+  min-height: 100vh;
+}
+
+.page {
+  width: min(1120px, calc(100% - 2rem));
+  margin: 1.5rem auto 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.hero {
+  background: linear-gradient(125deg, #132238, #2f4b66 58%, #4d6b89 100%);
+  color: #fff;
+  border-radius: 18px;
+  padding: 1.4rem 1.5rem;
+  box-shadow: var(--shadow);
+  animation: slide-up 0.6s ease;
+}
+
+.hero h1 {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.6rem, 2.7vw, 2.2rem);
+}
+
+.hero p {
+  margin: 0.65rem 0 0;
+  max-width: 70ch;
+  color: #e4edf7;
+}
+
+.panel {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+  animation: slide-up 0.7s ease;
+}
+
+.workspace-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(340px, 1fr) minmax(340px, 1fr);
+}
+
+.panel-note {
+  margin: 0 0 1rem;
+  color: var(--muted);
+}
+
+.panel h2 {
+  margin: 0 0 0.8rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  padding: 0.58rem 0.65rem;
+  color: var(--ink);
+}
+
+input:focus-visible,
+button:focus-visible {
+  outline: 2px solid #2f4b66;
+  outline-offset: 1px;
+}
+
+button {
+  align-self: end;
+  border: none;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.7rem 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.22s ease, transform 0.12s ease;
+}
+
+button:hover {
+  background: var(--accent-dark);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.danger-btn {
+  background: #9b2020;
+}
+
+.danger-btn:hover {
+  background: #7b1717;
+}
+
+.reference-grid {
+  margin-top: 0.9rem;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.reference-card {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.75rem;
+  background: #fff;
+  display: grid;
+  gap: 0.55rem;
+  animation: slide-up 0.35s ease;
+}
+
+.select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.9rem;
+}
+
+.select-wrap input {
+  width: auto;
+}
+
+.reference-photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  background: #151515;
+}
+
+.reference-meta {
+  display: grid;
+  gap: 0.22rem;
+}
+
+.reference-name {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.98rem;
+}
+
+.reference-id {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.reference-delete {
+  width: 100%;
+}
+
+.empty-references {
+  margin: 0;
+  padding: 0.8rem;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  color: var(--muted);
+}
+
+.browser-controls {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.7rem;
+}
+
+.browser-stage {
+  position: relative;
+  width: 100%;
+  max-width: 760px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+#browser-video,
+#browser-overlay {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#browser-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+.ok {
+  color: var(--ok);
+  font-weight: 700;
+}
+
+.err {
+  color: #9b2020;
+  font-weight: 700;
+}
+
+.stream-stats {
+  margin: 0.65rem 0 0;
+  font-size: 0.93rem;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .page {
+    width: calc(100% - 1rem);
+    margin-top: 0.75rem;
+  }
+
+  .panel,
+  .hero {
+    border-radius: 12px;
+  }
+
+  .workspace-grid {
+    grid-template-columns: 1fr;
+  }
+}

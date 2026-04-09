@@ -1,0 +1,45 @@
+# VCS and metadata
+.git/
+.gitignore
+
+# Python caches/build
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.dylib
+build/
+dist/
+*.egg-info/
+
+# Virtual envs and tooling
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Editors and OS files
+.vscode/
+.idea/
+.DS_Store
+
+# Logs and local env files
+*.log
+.env
+.env.*
+
+# TLS certificates and private keys (mount at runtime instead)
+certs/
+*.pem
+*.key
+
+# Large local media files
+*.mp4
+*.avi
+*.mov
+
+# Local runtime data (mounted volume at runtime)
+data/references/*
+!data/references/.gitkeep
