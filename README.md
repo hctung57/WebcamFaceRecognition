@@ -1,10 +1,13 @@
-# Project Name
-VeriFace
+# VeriFace
 
-This component is **Active (Beta)**.
+<p align="center">
+  <img src="docs/assets/veriface-logo.svg" alt="VeriFace logo" width="520" />
+</p>
 
 ## Overview
 VeriFace is a browser-first face recognition component for lightweight deployment scenarios. It matters because it keeps webcam capture on the client side while performing recognition on the server, reducing device-specific camera handling on backend hosts.
+
+>VeriFace là một thành phần nhận diện khuôn mặt theo định hướng browser-first, được thiết kế cho các kịch bản triển khai nhẹ. Điều này quan trọng vì hệ thống giữ việc truy cập và xử lý webcam ở phía client, trong khi quá trình nhận diện được thực hiện trên server, từ đó giảm sự phụ thuộc vào việc xử lý camera theo từng loại thiết bị ở phía backend.
 
 Demo:
 
